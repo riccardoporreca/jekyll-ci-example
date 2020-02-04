@@ -1,1 +1,39 @@
+# When serving on a local machine, the default time zone is set by your operating system.
+# But when served on a remote host/server, the default time zone depends on the server's setting or location.
+# [https://jekyllrb.com/docs/configuration/]
+# The default timezone of the on-line website (as of March 2018) appears to be
+# GMT, and we do not want to switch to a different one (e.g. CET), in order not
+# to affect already-published news posts. Still, we explicitly set the timezone
+# to GMT for the sake of clarity and determinism going forward. This also
+# ensures the timezone is consistently fixed to GMT when the website is served
+# locally.
+timezone: GMT
+
+
+# In case of checkout as RStudio project and local serve, avoid constant re-generation due to often-changing sub-directory 
 exclude: [vendor]
+
+
+# Define Collections
+collections:
+  jobs:
+    output: true
+    permalink: /:collection/:path/
+
+# Make URLs look pretty by removing .html
+permalink: pretty
+
+# Set Excerpt Separator for News Posts
+excerpt_separator: <!--more-->
+
+# Markdown syntax highlighting for news posts
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Set defaults
+defaults:
+
+plugins:
+  - jekyll-redirect-from
