@@ -12,14 +12,22 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+    - name: Ruby Bundler cache
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-    - name: Install System Dependencies
     - name: Install System Dependencies
       run: |
         sudo apt-get install -y libcurl4-openssl-dev libxslt-dev libxml2-dev
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Bundler install
+    - name: Bundle install
       run: |
-        gem install bundler && bundle install --path vendor/bundle
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
       env:
         NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     - name: Build the website
