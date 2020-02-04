@@ -8,17 +8,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Ruby 2.6
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: 2.6.x
     - name: Install System Dependencies
       run: |
         sudo apt-get update && apt-get install -y --no-install-recommends \
         libxml2-dev \
         libssl-dev \
         libcurl4-openssl-dev
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.x
     - name: Build the website
       run: |
         gem install bundler jekyll
