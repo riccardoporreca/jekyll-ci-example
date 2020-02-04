@@ -15,19 +15,19 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt-get install -y libcurl4-openssl-dev libxslt-dev libxml2-dev
-    - name: Install Ruby Gems
-      run: |
-        gem install github-pages jekyll-redirect-from html-proofer
-      env:
-        NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Bundler install
+      run: |
+        gem install bundler && bundle install --path vendor/bundle
+      env:
+        NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     - name: Build the website
       run: |
-        jekyll build
+        bundle exec jekyll build
     - name: Site structure
       run: ls -R _site
     - name: Test with html-proofer
       run: |
-        htmlproofer _site
+        bundle exec htmlproofer _site
 
