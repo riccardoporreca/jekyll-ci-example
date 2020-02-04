@@ -19,8 +19,10 @@ jobs:
         ruby-version: 2.6.x
     - name: Build the website
       run: |
-        gem install bundler jekyll
+        gem install jekyll
         jekyll build
+    - name: Site structure
+      run: ls -R _site
     - name: Test with html-proofer
       run: |
         gem install pkg-config -v "~> 1.1"
