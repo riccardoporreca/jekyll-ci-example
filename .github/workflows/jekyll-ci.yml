@@ -21,9 +21,6 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    - name: Install System Dependencies
-      run: |
-        sudo apt-get install -y libcurl4-openssl-dev libxslt-dev libxml2-dev
     - name: Bundle install
       run: |
         gem install bundler
