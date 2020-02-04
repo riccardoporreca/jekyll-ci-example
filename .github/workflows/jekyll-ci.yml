@@ -18,6 +18,8 @@ jobs:
     - name: Install Ruby Gems
       run: |
         gem install jekyll html-proofer
+      env:
+        NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build the website
@@ -28,5 +30,4 @@ jobs:
     - name: Test with html-proofer
       run: |
         htmlproofer _site
-      env:
-        NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+
