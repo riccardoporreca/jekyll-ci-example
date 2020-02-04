@@ -17,7 +17,7 @@ jobs:
     - name: Ruby Bundler cache
       uses: actions/cache@v1
       with:
-        path: vendor/bundle
+        path: vendor/__bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
