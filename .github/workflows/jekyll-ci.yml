@@ -16,7 +16,7 @@ jobs:
     - name: Build the website
       run: |
         gem install bundler jekyll
-        bundle exec jekyll build
+        jekyll build
     - name: Test with html-proofer
       run: |
         gem install html-proofer
