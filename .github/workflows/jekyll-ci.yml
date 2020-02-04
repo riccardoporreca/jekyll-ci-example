@@ -19,6 +19,7 @@ jobs:
         jekyll build
     - name: Test with html-proofer
       run: |
+        gem install pkg-config -v "~> 1.1"
         gem install html-proofer
         htmlproofer _site
       env:
