@@ -21,6 +21,9 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+   - name: Install System Dependencies
+      run: |
+        sudo apt-get install -y libxslt-dev
     - name: Bundle install
       run: |
         gem install bundler
