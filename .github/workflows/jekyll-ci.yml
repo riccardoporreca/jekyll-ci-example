@@ -15,12 +15,19 @@ jobs:
       with:
         ruby-version: 2.6.x
     - name: Ruby Bundler cache
+      id: cache-bundler
       uses: actions/cache@v1
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name: HTMLProofer cache
+      id: cache-htmlproofer
+      uses: actions/cache@v1
+      with:
+        path: tmp/.htmlproofer
+        key: ${{ runner.os }}-htmlproofer
     - name: Install System Dependencies
       run: |
         sudo apt-get install -y libxslt-dev
@@ -38,5 +45,5 @@ jobs:
       run: ls -R _site
     - name: Test with html-proofer
       run: |
-        bundle exec htmlproofer _site
+        bundle exec htmlproofer _site --timeframe 1h
 
