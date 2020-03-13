@@ -1,19 +1,26 @@
 name: CI
 
-on: [push]
+# Trigger the workflow on push or pull request
+on: [push, pull_request]
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
 
     steps:
+
     - name: Checkout
       uses: actions/checkout@v2
+
+    # Similar to jekyll/jekyll/.github/workflows/ci.yml (333090d)
     - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+
+    # https://github.com/actions/cache/blob/master/examples.md#ruby---bundler
     - name: Ruby Bundler cache
       id: cache-bundler
       uses: actions/cache@v1
@@ -22,27 +29,35 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+
     - name: HTMLProofer cache
       id: cache-htmlproofer
       uses: actions/cache@v1
+      # https://github.com/gjtorikian/html-proofer#configuring-caching
       with:
         path: tmp/.htmlproofer
         key: ${{ runner.os }}-htmlproofer
+
     - name: Install System Dependencies
-      run: |
-        sudo apt-get install -y libxslt-dev
+      run: sudo apt-get install -y libxslt-dev
+
+    # https://github.com/actions/cache/blob/master/examples.md#ruby---bundler
     - name: Bundle install
       run: |
         gem install bundler
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
       env:
+        # https://github.com/gjtorikian/html-proofer#installation
         NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+
     - name: Build the website
       run: |
         bundle exec jekyll build
+
     - name: Site structure
-      run: ls -R _site
+      run: ls -l _site
+
     - name: Test with html-proofer
       run: |
         bundle exec htmlproofer _site --timeframe 1h
